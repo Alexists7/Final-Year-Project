@@ -1,0 +1,2 @@
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D INSTALL_PYTHON_EXAMPLES=ON -D INSTALL_C_EXAMPLES=OFF -D OPENCV_ENABLE_NONFREE=ON -D OPENCV_EXTRA_MODULES_PATH=/root/opencv_build/opencv_contrib/modules -D PYTHON3_EXECUTABLE=/root/miniconda3/envs/opencv/bin/python3 -D PYTHON3_INCLUDE_DIR=/root/miniconda3/envs/opencv/include/python3.12 -D PYTHON3_PACKAGES_PATH=/root/miniconda3/envs/opencv/lib/python3.12/site-packages -D WITH_GSTREAMER=ON -D WITH_OPENGL=ON -D WITH_EGL=ON -D WITH_QT=ON -D BUILD_EXAMPLES=ON ..
+

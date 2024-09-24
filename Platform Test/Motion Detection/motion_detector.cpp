@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 
     // GStreamer pipeline string with NV12 format
     string pipeline = "qtiqmmfsrc camera=" + to_string(camera_id) +
-                      " ! video/x-raw,format=NV12,framerate=30/1,width=1920,height=1080 ! "
+                      " ! video/x-raw,format=NV12,width=1280,height=720,framerate=30/1 ! "
                       "videoconvert ! video/x-raw,format=BGR ! appsink";
 
     cv::VideoCapture cap(pipeline, cv::CAP_GSTREAMER); // Open GStreamer pipeline
@@ -29,12 +29,8 @@ int main(int argc, char *argv[]) {
 
     cout << "Camera opened successfully." << endl;
 
-    cv::Mat frame, prevFrame, resizedFrame;
+    cv::Mat frame, prevFrame;
     int motionCounter = 0;
-
-    // Define the new size for the window (for example, 640x360)
-    int windowWidth = 640;
-    int windowHeight = 360;
 
     while (true) {
         cap >> frame; // Capture frame from camera
@@ -44,22 +40,16 @@ int main(int argc, char *argv[]) {
             break;
         }
 
-        // Resize the frame to the desired size
-        cv::resize(frame, resizedFrame, cv::Size(windowWidth, windowHeight));
-
         if (prevFrame.empty()) {
             prevFrame = frame.clone();
             continue;
         }
 
-        cv::Mat grayFrame, grayPrevFrame, resizedPrevFrame;
-        
-        // Resize the previous frame to match the resized frame
-        cv::resize(prevFrame, resizedPrevFrame, cv::Size(windowWidth, windowHeight));
+        cv::Mat grayFrame, grayPrevFrame;
         
         // Convert current and previous frames to grayscale
-        cv::cvtColor(resizedFrame, grayFrame, cv::COLOR_BGR2GRAY);
-        cv::cvtColor(resizedPrevFrame, grayPrevFrame, cv::COLOR_BGR2GRAY);
+        cv::cvtColor(frame, grayFrame, cv::COLOR_BGR2GRAY);
+        cv::cvtColor(prevFrame, grayPrevFrame, cv::COLOR_BGR2GRAY);
         
         cv::Mat diff;
         cv::absdiff(grayFrame, grayPrevFrame, diff); // Calculate frame difference
@@ -87,8 +77,8 @@ int main(int argc, char *argv[]) {
 
         prevFrame = frame.clone();
 
-        // Display the resized frame instead of the full-size frame
-        cv::imshow("Motion Detection", resizedFrame);
+        // Display the original frame
+        // cv::imshow("Motion Detection", frame);
 
         if (cv::waitKey(1) == 27) { // Exit loop if ESC key is pressed
             break;
