@@ -1,5 +1,5 @@
-Computer\ Test/Motion\ Detection/motion_detector
-Platform\ Test/Motion\ Detection/motion_detector
-Computer\ Test/Buffer\ Recording/buffer_recording
+Computer\ Test/1\)\ Motion\ Detection/motion_detector
+Computer\ Test/2\)\ Buffer\ Recording/buffer_recording
+Platform\ Test/1\)\ Motion\ Detection/motion_detector
+Platform\ Test/2\)\ Buffer\ Recording/buffer_recording
 *.vscode
-
