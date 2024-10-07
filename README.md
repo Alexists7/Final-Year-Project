@@ -1,1 +1,2 @@
-# Final-Year-Project
+## Code: MA3, Title: Lightweight Motion Detector
+A motion sensor project that detects motion, summarised those frames, and may sound an alarm accordingly. This software system will constantly monitors an environment using a Raspi camera and sounds an alarm and records images of the motion taking place as soon as it takes place. Every video frame will be numbered and also take time, so that motion timing can also be recorded. Security codes will also be set up for activating and deactivating alarms.
