@@ -2,7 +2,9 @@
 #include <iostream>
 #include <deque>
 #include <ctime>
-#include <fstream> // For file handling
+#include <fstream>
+#include <sys/stat.h>  // For mkdir
+#include <unistd.h>    // For access
 
 using namespace std;
 
@@ -32,12 +34,14 @@ int main(int argc, char *argv[]) {
 
     cout << "Camera opened successfully." << endl;
 
-    // Buffer to store 5 seconds of frames (assuming 30fps)
+    // Buffer to store 2 seconds of frames (assuming 30fps)
     const int fps = 30;
-    const int bufferSize = fps * 5; // 5 seconds * 30 fps
-    deque<cv::Mat> buffer;
-    int motionCounter = 0;     // Counter for sustained motion
-    int noMotionCounter = 0;   // Counter for no motion detected
+    const int preMotionBufferSize = 150;  // 2 seconds of frames
+    const int postMotionFrames = 200;     // 3 seconds of post-motion frames
+    deque<cv::Mat> buffer;                    // Circular buffer for 2 seconds before motion
+    deque<cv::Mat> recordingBuffer;           // Buffer to hold frames during recording
+    int motionCounter = 0;                    // Counter for sustained motion
+    int noMotionCounter = 0;                  // Counter for no motion detected
 
     bool recording = false;
     bool motionTriggered = false;
@@ -67,7 +71,7 @@ int main(int argc, char *argv[]) {
         // Calculate difference and apply threshold
         cv::Mat diff;
         cv::absdiff(grayFrame, grayPrevFrame, diff);
-        cv::threshold(diff, diff, 20, 255, cv::THRESH_BINARY); // Set a reasonable threshold
+        cv::threshold(diff, diff, 30, 255, cv::THRESH_BINARY); // Set a reasonable threshold
 
         // Morphological opening to remove noise
         cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
@@ -85,13 +89,10 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        // Debug output for motion detection
-        cout << "Motion Count: " << motionCount << endl;
-
-        // Buffer the frame
+        // Buffer the frame, ensuring we always have the last 2 seconds of frames
         buffer.push_back(frame.clone());
-        if (buffer.size() > bufferSize) {
-            buffer.pop_front(); // Remove oldest frame when buffer exceeds 5 seconds
+        if (buffer.size() > preMotionBufferSize) {
+            buffer.pop_front(); // Remove oldest frame when buffer exceeds 2 seconds
         }
 
         // Detect motion and adjust counters
@@ -99,39 +100,52 @@ int main(int argc, char *argv[]) {
             motionCounter++;
             noMotionCounter = 0; // Reset no-motion counter when motion is detected
 
-            if (!motionTriggered && motionCounter >= fps * 2) { // Motion detected for 2 seconds
+            // Motion detected for 2 seconds, start recording
+            if (!motionTriggered && motionCounter >= fps * 2) {
                 motionTriggered = true;
                 cout << "Motion sustained for 2 seconds. Start recording..." << endl;
 
-                // Initialize video writer with the size of the frames in the buffer
+                // Initialize video writer
                 time_t now = time(0);
                 tm *ltm = localtime(&now);
+
+                // Create the "~/data" directory if it doesn't exist
+                string dataDir = "/data";
+                if (access(dataDir.c_str(), F_OK) == -1) {
+                    mkdir(dataDir.c_str(), 0777);
+                }
+
+                // Create sub-directory with format YYYY-MM-DD
+                char dateDir[20];
+                sprintf(dateDir, "%s/%04d-%02d-%02d", dataDir.c_str(), ltm->tm_year + 1900, ltm->tm_mon + 1, ltm->tm_mday);
+                if (access(dateDir, F_OK) == -1) {
+                    mkdir(dateDir, 0777);
+                }
+
+                // Construct file paths
                 char filename[100];
-                sprintf(filename, "%04d-%02d-%02d_%02d:%02d:%02d.mp4",
+                sprintf(filename, "%s/%04d-%02d-%02d_%02d:%02d:%02d.mp4", dateDir,
                         ltm->tm_year + 1900, ltm->tm_mon + 1, ltm->tm_mday,
                         ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
                 videoFileName = filename;
 
-                // Open video writer
                 video.open(videoFileName, cv::VideoWriter::fourcc('H', '2', '6', '4'), fps, frame.size());
 
-                // Write all frames from the buffer to the video
+                // Write all frames from the buffer (2 seconds before motion)
                 for (const auto& bufFrame : buffer) {
-                    video.write(bufFrame);
+                    recordingBuffer.push_back(bufFrame);
                 }
-
-                recording = true; // Set recording to true after starting video writing
+                buffer.clear();  // Clear the buffer after transferring frames
+                recording = true;
             }
         } else {
-            // Increase the no-motion counter
             noMotionCounter++;
         }
 
         // Stop recording if no motion detected for 3 seconds
-        if (motionTriggered && noMotionCounter >= fps * 3) { // No motion for 3 seconds
+        if (motionTriggered && noMotionCounter >= postMotionFrames) {
             cout << "No motion for 3 seconds. Stop recording..." << endl;
 
-            // Calculate duration of motion in seconds
             int durationOfMotion = motionCounter / fps; // Motion duration in seconds
             video.release(); // Release the video writer
 
@@ -139,8 +153,9 @@ int main(int argc, char *argv[]) {
             string metadataFileName = videoFileName.substr(0, videoFileName.find_last_of('.')) + ".txt"; // Same name as video
             ofstream metadataFile(metadataFileName);
             if (metadataFile.is_open()) {
-                metadataFile << "Date: " << videoFileName.substr(0, 10) << endl; // Extract date from filename
-                metadataFile << "Time: " << videoFileName.substr(11, 8) << endl; // Extract time from filename
+                size_t dateStart = videoFileName.find_last_of('/') + 1; // Find the start of the file name (after the last '/')
+                metadataFile << "Date: " << videoFileName.substr(dateStart, 10) << endl; // Extract date (YYYY-MM-DD)
+                metadataFile << "Time: " << videoFileName.substr(dateStart + 11, 8) << endl; // Extract time (HH:MM:SS)
                 metadataFile << "Duration of Motion: " << durationOfMotion << " seconds" << endl;
                 metadataFile.close();
                 cout << "Metadata saved to " << metadataFileName << endl;
@@ -148,15 +163,20 @@ int main(int argc, char *argv[]) {
                 cout << "Failed to create metadata file." << endl;
             }
 
-            recording = false; // Reset recording flag
-            motionTriggered = false; // Reset trigger for next motion detection
-            buffer.clear(); // Clear buffer after stopping the recording
-            motionCounter = 0; // Reset motion counter after stopping recording
+            recording = false;
+            motionTriggered = false;
+            motionCounter = 0;
+            noMotionCounter = 0;
+            recordingBuffer.clear();  // Clear the recording buffer
         }
 
         // Write frame to video if recording is in progress
         if (recording) {
-            video.write(frame);
+            recordingBuffer.push_back(frame.clone());
+            if (recordingBuffer.size() > 0) {
+                video.write(recordingBuffer.front());
+                recordingBuffer.pop_front();
+            }
         }
 
         prevFrame = frame.clone(); // Save current frame for next iteration
