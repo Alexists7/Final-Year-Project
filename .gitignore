@@ -2,4 +2,17 @@ Computer\ Test/1\)\ Motion\ Detection/motion_detector
 Computer\ Test/2\)\ Buffer\ Recording/buffer_recording
 Platform\ Test/1\)\ Motion\ Detection/motion_detector
 Platform\ Test/2\)\ Buffer\ Recording/buffer_recording
+Computer\ Test/3\)\ Face\ Detection/dataset
+Computer\ Test/3\)\ Face\ Detection/encodings.csv
+Computer\ Test/3\)\ Face\ Detection/test
+Computer\ Test/3\)\ Face\ Detection/data
+Computer\ Test/3\)\ Face\ Detection/headshots
+Computer\ Test/3\)\ Face\ Detection/record_detect_faces
+Platform\ Test/3\)\ Face\ Detection/cascades
+Platform\ Test/3\)\ Face\ Detection/data
+Platform\ Test/3\)\ Face\ Detection/dataset
+Platform\ Test/3\)\ Face\ Detection/test
+Platform\ Test/3\)\ Face\ Detection/encodings.csv
+Platform\ Test/3\)\ Face\ Detection/headshots
+Platform\ Test/3\)\ Face\ Detection/record_detect_faces
 *.vscode

@@ -130,16 +130,57 @@ int main() {
             int durationOfMotion = motionCounter / fps; // Motion duration in seconds
             video.release(); // Release the video writer
 
-            // Create metadata file with the same name as the video
-            string metadataFileName = videoFileName.substr(0, videoFileName.find_last_of('.')) + ".txt"; // Same name as video
-            ofstream metadataFile(metadataFileName);
+            // Initialize video writer
+            time_t now = time(0);
+            tm *ltm = localtime(&now);
+
+            // Create "data" directory if it doesn't exist
+            if (access("data", F_OK) == -1) {
+                mkdir("data", 0777);
+            }
+
+            // Create sub-directory with format YYYY-MM-DD
+            char dateDir[20];
+            sprintf(dateDir, "data/%04d-%02d-%02d", ltm->tm_year + 1900, ltm->tm_mon + 1, ltm->tm_mday);
+            if (access(dateDir, F_OK) == -1) {
+                mkdir(dateDir, 0777);
+            }
+
+            // Construct file paths for video
+            char videoFilename[100];
+            sprintf(videoFilename, "%s/%04d-%02d-%02d_%02d:%02d:%02d.mp4", dateDir,
+                    ltm->tm_year + 1900, ltm->tm_mon + 1, ltm->tm_mday,
+                    ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
+            videoFileName = videoFilename;
+
+            
+
+            // Initialize video writer
+            video.open(videoFileName, cv::VideoWriter::fourcc('H', '2', '6', '4'), fps, frame.size());
+
+            // Write all frames from the buffer (2 seconds before motion)
+            for (const auto& bufFrame : buffer) {
+                recordingBuffer.push_back(bufFrame);
+            }
+            buffer.clear();  // Clear the buffer after transferring frames
+            recording = true;
+
+            // Construct metadata file name
+            char metadataFilename[100];
+            sprintf(metadataFilename, "%s/%04d-%02d-%02d_%02d:%02d:%02d.txt", dateDir,
+                    ltm->tm_year + 1900, ltm->tm_mon + 1, ltm->tm_mday,
+                    ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
+
+            // Create and write to the metadata file
+            ofstream metadataFile(metadataFilename);
             if (metadataFile.is_open()) {
                 size_t dateStart = videoFileName.find_last_of('/') + 1; // Find the start of the file name (after the last '/')
                 metadataFile << "Date: " << videoFileName.substr(dateStart, 10) << endl; // Extract date (YYYY-MM-DD)
                 metadataFile << "Time: " << videoFileName.substr(dateStart + 11, 8) << endl; // Extract time (HH:MM:SS)
+                int durationOfMotion = motionCounter / fps; // Motion duration in seconds
                 metadataFile << "Duration of Motion: " << durationOfMotion << " seconds" << endl;
                 metadataFile.close();
-                cout << "Metadata saved to " << metadataFileName << endl;
+                cout << "Metadata saved to " << metadataFilename << endl;
             } else {
                 cout << "Failed to create metadata file." << endl;
             }
