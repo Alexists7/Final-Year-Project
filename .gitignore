@@ -1,18 +1,18 @@
-Computer\ Test/1\)\ Motion\ Detection/motion_detector
-Computer\ Test/2\)\ Buffer\ Recording/buffer_recording
-Platform\ Test/1\)\ Motion\ Detection/motion_detector
-Platform\ Test/2\)\ Buffer\ Recording/buffer_recording
-Computer\ Test/3\)\ Face\ Detection/dataset
-Computer\ Test/3\)\ Face\ Detection/encodings.csv
-Computer\ Test/3\)\ Face\ Detection/test
-Computer\ Test/3\)\ Face\ Detection/data
-Computer\ Test/3\)\ Face\ Detection/headshots
-Computer\ Test/3\)\ Face\ Detection/record_detect_faces
-Platform\ Test/3\)\ Face\ Detection/cascades
-Platform\ Test/3\)\ Face\ Detection/data
-Platform\ Test/3\)\ Face\ Detection/dataset
-Platform\ Test/3\)\ Face\ Detection/test
-Platform\ Test/3\)\ Face\ Detection/encodings.csv
-Platform\ Test/3\)\ Face\ Detection/headshots
-Platform\ Test/3\)\ Face\ Detection/record_detect_faces
+Embedded\ Application/Computer\ Test/1\)\ Motion\ Detection/motion_detector
+Embedded\ Application/Computer\ Test/2\)\ Buffer\ Recording/buffer_recording
+Embedded\ Application/Platform\ Test/1\)\ Motion\ Detection/motion_detector
+Embedded\ Application/Platform\ Test/2\)\ Buffer\ Recording/buffer_recording
+Embedded\ Application/Computer\ Test/3\)\ Face\ Detection/dataset
+Embedded\ Application/Computer\ Test/3\)\ Face\ Detection/encodings.csv
+Embedded\ Application/Computer\ Test/3\)\ Face\ Detection/test
+Embedded\ Application/Computer\ Test/3\)\ Face\ Detection/data
+Embedded\ Application/Computer\ Test/3\)\ Face\ Detection/headshots
+Embedded\ Application/Computer\ Test/3\)\ Face\ Detection/record_detect_faces
+Embedded\ Application/Platform\ Test/3\)\ Face\ Detection/cascades
+Embedded\ Application/Platform\ Test/3\)\ Face\ Detection/data
+Embedded\ Application/Platform\ Test/3\)\ Face\ Detection/dataset
+Embedded\ Application/Platform\ Test/3\)\ Face\ Detection/test
+Embedded\ Application/Platform\ Test/3\)\ Face\ Detection/encodings.csv
+Embedded\ Application/Platform\ Test/3\)\ Face\ Detection/headshots
+Embedded\ Application/Platform\ Test/3\)\ Face\ Detection/record_detect_faces
 *.vscode
