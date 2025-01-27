@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DesktopApp.Pages.DisplayPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Display">
+    <VerticalStackLayout Padding="30,0" Spacing="25">
+        <HorizontalStackLayout Spacing="10">
+            <Label Margin="0,20,0,0" Text="Hello" />
+            <Label Margin="0,20,0,0" Text="{Binding Username}" />
+        </HorizontalStackLayout>
+        <Button Text="Log Out" Command="{Binding SignOutCommand}" />
+    </VerticalStackLayout>
+</ContentPage>

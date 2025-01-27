@@ -1,0 +1,73 @@
+is_global = true
+build_property.MvvmToolkitEnableINotifyPropertyChangingSupport = true
+build_property._MvvmToolkitIsUsingWindowsRuntimePack = true
+build_property.CsWinRTComponent = 
+build_property.CsWinRTAotOptimizerEnabled = true
+build_property.CsWinRTAotOptimizerEnabled = true
+build_property.CsWinRTAotWarningLevel = 
+build_property.CsWinRTAotWarningLevel = 
+build_property.TargetFramework = net8.0-windows10.0.19041.0
+build_property.TargetPlatformMinVersion = 10.0.17763.0
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 9A19103F-16F7-4668-BE54-9A1E7A4F7556
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = DesktopApp
+build_property.ProjectDir = C:\Users\alexi\Desktop\Assignments\Year 4\Final Year Project\Code\Final-Year-Project\Desktop Application\DesktopApp\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTAotExportsEnabled = 
+build_property.CsWinRTRcwFactoryFallbackGeneratorForceOptIn = 
+build_property.CsWinRTRcwFactoryFallbackGeneratorForceOptOut = 
+build_property.CsWinRTCcwLookupTableGeneratorEnabled = true
+build_property.CsWinRTMergeReferencedActivationFactories = 
+
+[C:/Users/alexi/Desktop/Assignments/Year 4/Final Year Project/Code/Final-Year-Project/Desktop Application/DesktopApp/App.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = DesktopApp.App.xaml
+build_metadata.AdditionalFiles.TargetPath = App.xaml
+build_metadata.AdditionalFiles.RelativePath = App.xaml
+
+[C:/Users/alexi/Desktop/Assignments/Year 4/Final Year Project/Code/Final-Year-Project/Desktop Application/DesktopApp/AppShell.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = DesktopApp.AppShell.xaml
+build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
+build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
+
+[C:/Users/alexi/Desktop/Assignments/Year 4/Final Year Project/Code/Final-Year-Project/Desktop Application/DesktopApp/MainPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = DesktopApp.MainPage.xaml
+build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
+build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
+
+[C:/Users/alexi/Desktop/Assignments/Year 4/Final Year Project/Code/Final-Year-Project/Desktop Application/DesktopApp/Pages/DisplayPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = DesktopApp.Pages.DisplayPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\DisplayPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\DisplayPage.xaml
+
+[C:/Users/alexi/Desktop/Assignments/Year 4/Final Year Project/Code/Final-Year-Project/Desktop Application/DesktopApp/Pages/SignInView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = DesktopApp.Pages.SignInView.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\SignInView.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\SignInView.xaml
+
+[C:/Users/alexi/Desktop/Assignments/Year 4/Final Year Project/Code/Final-Year-Project/Desktop Application/DesktopApp/Pages/SignUpView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = DesktopApp.Pages.SignUpView.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\SignUpView.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\SignUpView.xaml
+
+[C:/Users/alexi/Desktop/Assignments/Year 4/Final Year Project/Code/Final-Year-Project/Desktop Application/DesktopApp/Resources/Styles/Colors.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = DesktopApp.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
+
+[C:/Users/alexi/Desktop/Assignments/Year 4/Final Year Project/Code/Final-Year-Project/Desktop Application/DesktopApp/Resources/Styles/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = DesktopApp.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml

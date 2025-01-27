@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DesktopApp.Pages.SignInView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Sign In">
+    <VerticalStackLayout
+        Padding="30,0"
+        Spacing="25">
+        <Entry Text="{Binding Email}" Placeholder="Email" WidthRequest="400"/>
+        <Entry IsPassword="True" Text="{Binding Password}" Placeholder="Password" WidthRequest="400"/>
+        <Button Command="{Binding SignInCommand}" Text="Sign In" />
+        <Button Command="{Binding NavigateSignUpCommand}" Text="Need an account? Sign up" />
+        <Button Command="{Binding SignInGuestCommand}" Text="Continue as guest" />
+    </VerticalStackLayout>
+</ContentPage>
