@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="DesktopApp.Pages.DisplayPage"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Display">
-    <VerticalStackLayout Padding="30,0" Spacing="25">
-        <HorizontalStackLayout Spacing="10">
-            <Label Margin="0,20,0,0" Text="Hello" />
-            <Label Margin="0,20,0,0" Text="{Binding Username}" />
-        </HorizontalStackLayout>
-        <Button Text="Log Out" Command="{Binding SignOutCommand}" />
-    </VerticalStackLayout>
+       x:Class="DesktopApp.Pages.DisplayPage"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       Title="Display">
+       <VerticalStackLayout Padding="30,0"
+                            Spacing="25">
+
+              <!-- Welcome message -->
+              <HorizontalStackLayout Spacing="10"
+                                     HorizontalOptions="Center">
+                     <Label
+                            Style="{StaticResource NewSubHeadline}"
+                            Text="Hello"/>
+                     <Label
+                            Style="{StaticResource NewSubHeadline}"
+                            Text="{Binding Username}"/>
+              </HorizontalStackLayout>
+
+              <!-- IP Address Entry -->
+              <Entry Text="{Binding DeviceIpAddress}"
+                     Placeholder="Enter device IP address"
+                     WidthRequest="400"/>
+              <Button Text="Pull motion recordings"
+                      Command="{Binding SaveIpCommand}"/>
+
+
+
+              <!-- Log Out Button -->
+              <Button
+                     Margin="0, 150, 0, 0"
+                     Text="Log Out"
+                     Command="{Binding SignOutCommand}"/>
+
+       </VerticalStackLayout>
 </ContentPage>

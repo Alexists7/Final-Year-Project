@@ -1,12 +1,16 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Firebase.Auth;
+using System.Diagnostics;
 
 namespace DesktopApp.Pages
 {
     public partial class DisplayPageViewModel : ObservableObject
     {
         private readonly FirebaseAuthClient _authClient;
+
+        [ObservableProperty]
+        private string _deviceIpAddress;
 
         public string Username => _authClient.User?.Info?.DisplayName ?? "Guest";
 
@@ -19,6 +23,68 @@ namespace DesktopApp.Pages
         {
             OnPropertyChanged(nameof(Username));
         }
+
+        [RelayCommand]
+        private async Task SaveIp()
+        {
+            if (!string.IsNullOrWhiteSpace(DeviceIpAddress))
+            {
+                Console.WriteLine($"Device IP Address saved: {DeviceIpAddress}");
+
+                try
+                {
+                    // Prompt for the SCP password
+                    string scpPassword = await Application.Current.MainPage.DisplayPromptAsync(
+                        "SCP Password",
+                        "Enter the SCP password:",
+                        accept: "OK",
+                        cancel: "Cancel",
+                        maxLength: 100,
+                        keyboard: Keyboard.Text
+                    );
+
+                    if (string.IsNullOrWhiteSpace(scpPassword))
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Error", "Password is required.", "OK");
+                        return;
+                    }
+
+                    // Define the SCP command directly
+                    string command = $"sshpass -p \"{scpPassword}\" scp -r \"root@{DeviceIpAddress}:/home/ashaju/Platform Test/3) Face Detection/data\" ./DesktopApp";
+
+                    using (Process process = new Process())
+                    {
+                        // Start the process and run it in WSL
+                        process.StartInfo.FileName = "wsl.exe";  // Use wsl.exe directly
+                        process.StartInfo.Arguments = command;  // Directly pass the SCP command as argument
+                        process.StartInfo.UseShellExecute = false;
+                        process.StartInfo.RedirectStandardOutput = true;
+                        process.StartInfo.RedirectStandardError = true;
+
+                        process.Start();
+                        string output = await process.StandardOutput.ReadToEndAsync();
+                        string error = await process.StandardError.ReadToEndAsync();
+                        await process.WaitForExitAsync();
+
+                        // Display SCP output and error
+                        if (!string.IsNullOrWhiteSpace(output))
+                            await Application.Current.MainPage.DisplayAlert("SCP Output", output, "OK");
+
+                        if (!string.IsNullOrWhiteSpace(error))
+                            await Application.Current.MainPage.DisplayAlert("SCP Error", error, "OK");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", $"Failed to execute SCP command: {ex.Message}", "OK");
+                }
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Invalid IP address entered.", "OK");
+            }
+        }
+
 
 
         [RelayCommand]

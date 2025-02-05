@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Firebase.Auth;
+using System.Text.RegularExpressions;
 
 namespace DesktopApp.Pages
 {
@@ -33,6 +34,20 @@ namespace DesktopApp.Pages
                     return;
                 }
 
+                // Validate email format using regular expression
+                if (!IsValidEmail(Email))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Please enter a valid email address.", "OK");
+                    return;
+                }
+
+                // Validate password strength
+                if (!IsValidPassword(Password))
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, and one special character.", "OK");
+                    return;
+                }
+
                 // Attempt to create a new user with email, password, and username
                 await _authClient.CreateUserWithEmailAndPasswordAsync(Email, Password, Username);
 
@@ -59,11 +74,24 @@ namespace DesktopApp.Pages
             }
         }
 
-
         [RelayCommand]
         private async Task NavigateSignIn()
         {
             await Shell.Current.GoToAsync("//SignIn");
+        }
+
+        // Helper method to validate email format
+        private bool IsValidEmail(string email)
+        {
+            var emailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+            return emailRegex.IsMatch(email);
+        }
+
+        // Helper method to validate password strength
+        private bool IsValidPassword(string password)
+        {
+            var passwordRegex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}\[\]:;,.?<>~\\/-]).{8,}$");
+            return passwordRegex.IsMatch(password);
         }
     }
 }
