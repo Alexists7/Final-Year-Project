@@ -16,9 +16,6 @@ namespace DesktopApp.Pages
 
         public string Username => _authClient.User?.Info?.DisplayName ?? "Guest";
 
-        [ObservableProperty]
-        private string _secretMessage;
-
         public SignInViewModel(FirebaseAuthClient authClient)
         {
             _authClient = authClient;

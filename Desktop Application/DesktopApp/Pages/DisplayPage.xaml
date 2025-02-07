@@ -16,6 +16,12 @@
                      <Label
                             Style="{StaticResource NewSubHeadline}"
                             Text="{Binding Username}"/>
+                     <Label
+                            Style="{StaticResource NewSubHeadline}"
+                            Text=":"/>
+                     <Label Text="{Binding UserRole}"
+                            TextColor="Green"
+                            FontSize="24"/>
               </HorizontalStackLayout>
 
               <!-- IP Address Entry -->

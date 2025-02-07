@@ -6,23 +6,22 @@
     xmlns:local="clr-namespace:DesktopApp"
     xmlns:pages="clr-namespace:DesktopApp.Pages"
     Shell.FlyoutBehavior="Flyout"
-    Title="DesktopApp"
-    >
+    Title="DesktopApp">
 
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Route="MainPage"/>
     <ShellContent
         Title="Sign In"
         ContentTemplate="{DataTemplate pages:SignInView}"
-        Route="SignIn" />
+        Route="SignIn"/>
     <ShellContent
         Title="Sign Up"
         ContentTemplate="{DataTemplate pages:SignUpView}"
-        Route="SignUp" />
+        Route="SignUp"/>
     <ShellContent
         Title="Display"
         ContentTemplate="{DataTemplate pages:DisplayPage}"
-        Route="DisplayPage" />
+        Route="DisplayPage"/>
 </Shell>

@@ -12,7 +12,11 @@ namespace DesktopApp.Pages
         [ObservableProperty]
         private string _deviceIpAddress;
 
+        [ObservableProperty]
+        private bool _isAdmin;
+
         public string Username => _authClient.User?.Info?.DisplayName ?? "Guest";
+        public string UserRole => IsAdmin ? "Admin" : "User";
 
         public DisplayPageViewModel(FirebaseAuthClient authClient)
         {
@@ -22,6 +26,40 @@ namespace DesktopApp.Pages
         public void OnAppearing()
         {
             OnPropertyChanged(nameof(Username));
+
+            var user = _authClient.User;
+
+            if (user != null)
+            {
+                IsAdmin = CheckWhitelist(user.Info.Email);
+            }
+            else
+            {
+                IsAdmin = false;
+            }
+
+            OnPropertyChanged(nameof(UserRole));
+        }
+
+        private bool CheckWhitelist(string email)
+        {
+            try
+            {
+                // Read the whitelist file
+                string filePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\whitelist.txt"));
+
+                if (File.Exists(filePath))
+                {
+                    var whitelistEmails = File.ReadAllLines(filePath);
+                    return whitelistEmails.Contains(email);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error reading whitelist: {ex.Message}");
+            }
+
+            return false;
         }
 
         [RelayCommand]
@@ -35,8 +73,8 @@ namespace DesktopApp.Pages
                 {
                     // Prompt for the SCP password
                     string scpPassword = await Application.Current.MainPage.DisplayPromptAsync(
-                        "SCP Password",
-                        "Enter the SCP password:",
+                        "RB5 Password",
+                        "Enter the RB5 password below:",
                         accept: "OK",
                         cancel: "Cancel",
                         maxLength: 100,
@@ -72,11 +110,17 @@ namespace DesktopApp.Pages
 
                         if (!string.IsNullOrWhiteSpace(error))
                             await Application.Current.MainPage.DisplayAlert("SCP Error", error, "OK");
+
+                        await Application.Current.MainPage.DisplayAlert("Sucess", "Downloaded motion recordings!", "OK");
                     }
                 }
                 catch (Exception ex)
                 {
                     await Application.Current.MainPage.DisplayAlert("Error", $"Failed to execute SCP command: {ex.Message}", "OK");
+                }
+                finally
+                {
+                    DeviceIpAddress = string.Empty;
                 }
             }
             else
