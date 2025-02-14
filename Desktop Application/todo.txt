@@ -1,1 +1,0 @@
-1. Create a display mechanism to show videos on app, then working to blurring and pixelating videos, to show unauthorised users.

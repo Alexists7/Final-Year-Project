@@ -3,6 +3,7 @@ using Firebase.Auth;
 using Firebase.Auth.Providers;
 using Firebase.Auth.Repository;
 using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui;
 
 namespace DesktopApp
 {
@@ -13,6 +14,8 @@ namespace DesktopApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
+                .UseMauiCommunityToolkitMediaElement()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

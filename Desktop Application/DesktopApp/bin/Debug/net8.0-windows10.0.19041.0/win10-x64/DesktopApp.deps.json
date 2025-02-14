@@ -9,6 +9,8 @@
     ".NETCoreApp,Version=v8.0/win10-x64": {
       "DesktopApp/1.0": {
         "dependencies": {
+          "CommunityToolkit.Maui": "8.0.0",
+          "CommunityToolkit.Maui.MediaElement": "4.1.2",
           "CommunityToolkit.Mvvm": "8.4.0",
           "FirebaseAuthentication.net": "4.1.0",
           "Microsoft.Extensions.Logging.Debug": "8.0.1",
@@ -29,6 +31,43 @@
           "WinRT.Runtime.dll": {
             "assemblyVersion": "2.2.0.0",
             "fileVersion": "2.2.0.48161"
+          }
+        }
+      },
+      "CommunityToolkit.Maui/8.0.0": {
+        "dependencies": {
+          "CommunityToolkit.Maui.Core": "8.0.0",
+          "Microsoft.Maui.Controls": "8.0.100",
+          "Microsoft.Maui.Controls.Compatibility": "8.0.100"
+        },
+        "runtime": {
+          "lib/net8.0-windows10.0.19041/CommunityToolkit.Maui.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "CommunityToolkit.Maui.Core/8.0.0": {
+        "dependencies": {
+          "Microsoft.Maui.Core": "8.0.100",
+          "Microsoft.Maui.Essentials": "8.0.100",
+          "System.Speech": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0-windows10.0.19041/CommunityToolkit.Maui.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "CommunityToolkit.Maui.MediaElement/4.1.2": {
+        "dependencies": {
+          "Microsoft.Maui.Controls": "8.0.100"
+        },
+        "runtime": {
+          "lib/net8.0-windows10.0.19041/CommunityToolkit.Maui.MediaElement.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       },
@@ -473,6 +512,14 @@
             "fileVersion": "13.0.2.27524"
           }
         }
+      },
+      "System.Speech/8.0.0": {
+        "runtime": {
+          "runtimes/win/lib/net8.0/System.Speech.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
+          }
+        }
       }
     }
   },
@@ -486,6 +533,27 @@
       "type": "runtimepack",
       "serviceable": false,
       "sha512": ""
+    },
+    "CommunityToolkit.Maui/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GO8x688KPm76UWLSqYElw510+GQF7zO9FU8RillE1hn0kySdBPUZNbwx1tWnBoJZSLJwxKUEONhHsMVIMsEXyw==",
+      "path": "communitytoolkit.maui/8.0.0",
+      "hashPath": "communitytoolkit.maui.8.0.0.nupkg.sha512"
+    },
+    "CommunityToolkit.Maui.Core/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pGMqh2cm82CDcEnzXqxjKOCIFRg28ilCPevm36eEBnZAjGmBG9lK0r7zf11aOFwMvIt44LNONAoQb+1jmjTQzg==",
+      "path": "communitytoolkit.maui.core/8.0.0",
+      "hashPath": "communitytoolkit.maui.core.8.0.0.nupkg.sha512"
+    },
+    "CommunityToolkit.Maui.MediaElement/4.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ejt3VnllmmsqbVn1sWYczUS4m78Mz5yre0+SpFyBkPMoz9oegAOR5xq8JOoA5H341NUono9l6lqtPipnJZxodQ==",
+      "path": "communitytoolkit.maui.mediaelement/4.1.2",
+      "hashPath": "communitytoolkit.maui.mediaelement.4.1.2.nupkg.sha512"
     },
     "CommunityToolkit.Mvvm/8.4.0": {
       "type": "package",
@@ -668,6 +736,13 @@
       "sha512": "sha512-R2pZ3B0UjeyHShm9vG+Tu0EBb2lC8b0dFzV9gVn50ofHXh9Smjk6kTn7A/FdAsC8B5cKib1OnGYOXxRBz5XQDg==",
       "path": "newtonsoft.json/13.0.2",
       "hashPath": "newtonsoft.json.13.0.2.nupkg.sha512"
+    },
+    "System.Speech/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CNuiA6vb95Oe5PRjClZEBiaju31vwB8OIeCgeSBXyZL6+MS4RVVB2X/C11z0xCkooHE3Vy91nM2z76emIzR+sg==",
+      "path": "system.speech/8.0.0",
+      "hashPath": "system.speech.8.0.0.nupkg.sha512"
     }
   }
 }
