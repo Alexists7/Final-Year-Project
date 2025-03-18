@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DesktopApp.MainPage"
+             >
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Image
+                Source="rb5.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="image of rb5 platform" />
+
+            <Label
+                Text="Motion Detector Application"
+                Style="{StaticResource NewHeadline}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <Label
+                Text="Click the button to&#10;login and connect to the device."
+                Style="{StaticResource NewSubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+
+            <Button
+                x:Name="LoginBtn"
+                Text="Go to Login Page"
+                Clicked="OnLoginClicked"
+                HorizontalOptions="Fill" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
