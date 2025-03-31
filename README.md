@@ -1,2 +1,10 @@
-## Code: MA3, Title: Lightweight Motion Detector
-A motion sensor project that detects motion, summarised those frames, and may sound an alarm accordingly. This software system will constantly monitors an environment using a Raspi camera and sounds an alarm and records images of the motion taking place as soon as it takes place. Every video frame will be numbered and also take time, so that motion timing can also be recorded. Security codes will also be set up for activating and deactivating alarms.
+## Lightweight Motion Detector for Constrained Devices
+*This motion sensor project is designed to detect motion in real-time, capture
+and summarise those frames, and trigger an alarm when an unknown person is
+detected. The software system will continuously monitor the environment using a
+Raspi camera, sounding an alarm and recording images (frames) whenever motion
+is detected. Every video frame will be numbered and timestamped, allowing for
+precise tracking of motion events. Additionally, security codes will be implemented
+to enable or disable the alarm system, ensuring secure control of the system’s
+operation.*
+

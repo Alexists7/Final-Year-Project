@@ -2,52 +2,46 @@ import cv2
 import os
 import imutils
 
-# Directories
+# Blur script that detects faces in videos and applies a strong Gaussian blur to them.
+# This script processes all videos in the specified directory and saves the processed videos in a new directory.
+
 data_dir = "data"
 output_dir = "processed_videos"
 os.makedirs(output_dir, exist_ok=True)
 
-# Load the pre-trained Haar Cascade classifiers for frontal and profile face detection
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 profile_face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_profileface.xml")
 
 def blur_face(frame, top, right, bottom, left):
     """Applies a strong Gaussian blur to the face region."""
     face_region = frame[top:bottom, left:right]
-    # Apply a stronger blur effect
+
     blurred_face = cv2.GaussianBlur(face_region, (99, 99), 30)
     frame[top:bottom, left:right] = blurred_face
     return frame
 
 def process_frame(frame, scale_ratio):
     """Processes a single frame: detects faces and applies blur effect consistently."""
-    resized_frame = imutils.resize(frame, width=320)  # Reduce resolution for faster detection
-    gray_frame = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2GRAY)  # Convert to grayscale for face detection
+    resized_frame = imutils.resize(frame, width=320)
+    gray_frame = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2GRAY)
 
-    # Detect frontal faces using Haar Cascade (OpenCV)
     faces = face_cascade.detectMultiScale(gray_frame, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
-    # Detect profile faces using Haar Cascade (OpenCV)
     profile_faces = profile_face_cascade.detectMultiScale(gray_frame, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
-    # Ensure both lists are not empty before concatenating
     all_faces = []
     if len(faces) > 0:
         all_faces.extend(faces)
     if len(profile_faces) > 0:
         all_faces.extend(profile_faces)
 
-    # Check if a face is detected for the first time or needs to maintain the blur
     for (x, y, w, h) in all_faces:
-        # Scale back face coordinates to original frame size
         top = int(y * scale_ratio)
         left = int(x * scale_ratio)
         bottom = int((y + h) * scale_ratio)
         right = int((x + w) * scale_ratio)
 
-        # Apply blur effect only if the face was detected or was detected previously
         frame = blur_face(frame, top, right, bottom, left)
 
-    # Return the processed frame
     return frame
 
 
@@ -60,24 +54,21 @@ def process_video(video_path, output_path):
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
 
-    scale_ratio = width / 320  # Scaling factor to revert face coordinates later
+    scale_ratio = width / 320
 
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
 
-        # Process the frame
         processed_frame = process_frame(frame, scale_ratio)
 
-        # Write the processed frame to output file
         out.write(processed_frame)
 
     cap.release()
     out.release()
     print(f"Processed {video_path} -> {output_path}")
 
-# Process all MP4 files in data directory and subdirectories
 for root, _, files in os.walk(data_dir):
     for filename in files:
         if filename.endswith(".mp4"):

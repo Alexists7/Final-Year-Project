@@ -59,26 +59,19 @@ namespace DesktopApp.Pages
         {
             _authClient = authClient;
 
-            // Initialize PlayVideoCommand
             PlayVideoCommand = new RelayCommand(PlayVideo, CanPlayVideo);
         }
 
-         // Method to check if the video is selected
         private bool CanPlayVideo()
         {
-            return IsVideoSelected;  // Only allow play if a video is selected
+            return IsVideoSelected;
         }
 
-        // Method to execute when the PlayVideo command is triggered
         private void PlayVideo()
         {
             if (!string.IsNullOrWhiteSpace(SelectedVideoPath))
             {
-                // Logic to play the video
                 Console.WriteLine($"Playing video from: {SelectedVideoPath}");
-
-                // Add your video playback logic here
-                // For example, if using a MediaElement or some other video player, set its source
             }
             else
             {
@@ -86,10 +79,8 @@ namespace DesktopApp.Pages
             }
         }
 
-        // A method to simulate video selection change (triggered by UI interaction)
         public void OnVideoSelected(string videoPath)
         {
-            // Update the selected video path and set the video as selected
             SelectedVideoPath = videoPath;
             IsVideoSelected = true;
             Console.WriteLine($"Video selected: {SelectedVideoPath}");
@@ -121,7 +112,6 @@ namespace DesktopApp.Pages
         {
             try
             {
-                // Read the whitelist file
                 string filePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\whitelist.txt"));
 
                 if (File.Exists(filePath))
@@ -147,7 +137,6 @@ namespace DesktopApp.Pages
 
                 try
                 {
-                    // Prompt for the SCP password
                     string scpPassword = await Application.Current.MainPage.DisplayPromptAsync(
                         "RB5 Password",
                         "Enter the RB5 password below:",
@@ -163,14 +152,12 @@ namespace DesktopApp.Pages
                         return;
                     }
 
-                    // Define the SCP command directly
                     string command = $"sshpass -p \"{scpPassword}\" scp -r \"root@{DeviceIpAddress}:/home/ashaju/Platform Test/3) Face Detection/data\" ./DesktopApp";
 
                     using (Process process = new Process())
                     {
-                        // Start the process and run it in WSL
-                        process.StartInfo.FileName = "wsl.exe";  // Use wsl.exe directly
-                        process.StartInfo.Arguments = command;  // Directly pass the SCP command as argument
+                        process.StartInfo.FileName = "wsl.exe";
+                        process.StartInfo.Arguments = command;
                         process.StartInfo.UseShellExecute = false;
                         process.StartInfo.RedirectStandardOutput = true;
                         process.StartInfo.RedirectStandardError = true;
@@ -207,7 +194,6 @@ namespace DesktopApp.Pages
             try
             {
                 Console.WriteLine("IsDataFetched value " + IsDataFetched);
-                // Command to 'cd' into the directory and then run the script with python3
                 string command = $"cd '/mnt/c/Users/alexi/Desktop/Assignments/Year 4/Final Year Project/Code/Final-Year-Project/Desktop Application/DesktopApp/' && python3 blur_videos.py";
 
                 using (Process process = new Process())
@@ -223,14 +209,12 @@ namespace DesktopApp.Pages
                     string error = await process.StandardError.ReadToEndAsync();
                     await process.WaitForExitAsync();
 
-                    // If there's an error during script execution, show it
                     if (!string.IsNullOrWhiteSpace(error))
                     {
                         await Application.Current.MainPage.DisplayAlert("Blurring Error", error, "OK");
                         return;
                     }
 
-                    // Show success message after script completes
                     await Application.Current.MainPage.DisplayAlert("Success", "Videos downloaded successfully!", "OK");
 
                     FetchVideoFiles();
@@ -249,13 +233,11 @@ namespace DesktopApp.Pages
         {
             try
             {
-                // Set IsDataFetched to false to hide the UI until data is fetched
                 IsDataFetched = false;
                 OnPropertyChanged(nameof(IsDataFetched));
 
                 string videoFolderPath;
 
-                // Check user role and select the appropriate folder
                 if (IsAdmin)
                 {
                     videoFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\", "data");
@@ -265,22 +247,17 @@ namespace DesktopApp.Pages
                     videoFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\", "processed_videos");
                 }
 
-                // Asynchronously fetch the video files from the selected folder, including subdirectories
                 var videoFiles = await Task.Run(() =>
                 {
-                    // Determine the video extension based on the folder
                     string searchPattern = IsAdmin ? "*.mp4" : "*.avi";
 
-                    // Use Directory.GetFiles to find all video files in subdirectories
                     return Directory.GetFiles(videoFolderPath, searchPattern, SearchOption.AllDirectories)
                                     .ToList();
                 });
 
-                // Update the VideoFiles property on the main thread
                 VideoFiles = videoFiles;
                 Console.WriteLine($"Video Files: {string.Join(", ", VideoFiles)}");
 
-                // Update the UI to show the video list
                 IsDataFetched = true;
                 OnPropertyChanged(nameof(IsDataFetched));
                 OnPropertyChanged(nameof(IsIpEntryVisible));
@@ -305,19 +282,17 @@ namespace DesktopApp.Pages
                     return;
                 }
 
-                // Attempt to sign out the user
                 _authClient.SignOut();
 
                 IsDataFetched = false;
                 OnPropertyChanged(nameof(IsDataFetched));
                 OnPropertyChanged(nameof(IsIpEntryVisible));
 
-                // Check if the user is actually signed out
-                if (_authClient.User == null)  // If no user is logged in, navigate to SignIn page
+                if (_authClient.User == null)
                 {
                     Console.WriteLine("User successfully signed out.");
 
-                    await Shell.Current.GoToAsync("//SignIn"); // Navigate to SignIn page
+                    await Shell.Current.GoToAsync("//SignIn");
                 }
                 else
                 {
@@ -326,7 +301,6 @@ namespace DesktopApp.Pages
             }
             catch (Exception ex)
             {
-                // Handle any sign-out errors
                 Console.WriteLine($"Error during logout: {ex.Message}");
             }
         }

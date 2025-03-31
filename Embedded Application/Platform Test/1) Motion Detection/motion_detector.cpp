@@ -3,6 +3,7 @@
 
 using namespace std;
 
+// Motion detection application for RB5 device, make sure to 0 for camera
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         cout << "Usage: " << argv[0] << " [camera id: 0|1|2|3]" << endl;
@@ -15,12 +16,11 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    // GStreamer pipeline string with NV12 format
     string pipeline = "qtiqmmfsrc camera=" + to_string(camera_id) +
                       " ! video/x-raw,format=NV12,width=1280,height=720,framerate=30/1 ! "
                       "videoconvert ! video/x-raw,format=BGR ! appsink";
 
-    cv::VideoCapture cap(pipeline, cv::CAP_GSTREAMER); // Open GStreamer pipeline
+    cv::VideoCapture cap(pipeline, cv::CAP_GSTREAMER);
 
     if (!cap.isOpened()) {
         cout << "Failed to open the camera." << endl;
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
     int motionCounter = 0;
 
     while (true) {
-        cap >> frame; // Capture frame from camera
+        cap >> frame;
 
         if (frame.empty()) {
             cout << "Failed to capture frame." << endl;
@@ -46,30 +46,29 @@ int main(int argc, char *argv[]) {
         }
 
         cv::Mat grayFrame, grayPrevFrame;
-        
-        // Convert current and previous frames to grayscale
+
         cv::cvtColor(frame, grayFrame, cv::COLOR_BGR2GRAY);
         cv::cvtColor(prevFrame, grayPrevFrame, cv::COLOR_BGR2GRAY);
-        
+
         cv::Mat diff;
-        cv::absdiff(grayFrame, grayPrevFrame, diff); // Calculate frame difference
-        
-        cv::threshold(diff, diff, 30, 255, cv::THRESH_BINARY); // Apply threshold to highlight motion
-        
+        cv::absdiff(grayFrame, grayPrevFrame, diff);
+
+        cv::threshold(diff, diff, 30, 255, cv::THRESH_BINARY);
+
         cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
-        cv::morphologyEx(diff, diff, cv::MORPH_OPEN, kernel); // Perform morphological opening to remove noise
-        
+        cv::morphologyEx(diff, diff, cv::MORPH_OPEN, kernel);
+
         std::vector<std::vector<cv::Point>> contours;
-        cv::findContours(diff, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE); // Find contours
-        
+        cv::findContours(diff, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+
         int motionCount = 0;
         for (const auto& contour : contours) {
             double area = cv::contourArea(contour);
-            if (area > 500) { // Adjust the threshold based on your needs
+            if (area > 500) {
                 motionCount++;
             }
         }
-        
+
         if (motionCount > 0) {
             motionCounter++;
             cout << "Motion detected " << motionCounter << endl;
@@ -77,16 +76,15 @@ int main(int argc, char *argv[]) {
 
         prevFrame = frame.clone();
 
-        // Display the original frame
         // cv::imshow("Motion Detection", frame);
 
-        if (cv::waitKey(1) == 27) { // Exit loop if ESC key is pressed
+        if (cv::waitKey(1) == 27) {
             break;
         }
     }
 
-    cap.release(); // Release the camera
-    cv::destroyAllWindows(); // Close all windows
+    cap.release();
+    cv::destroyAllWindows();
 
     return 0;
 }

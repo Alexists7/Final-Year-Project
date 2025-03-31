@@ -5,18 +5,17 @@
 
 using namespace std;
 
+// Function to open camera and capture images which will then be used for training
 int main() {
     string name;
-    
-    // Prompt the user to enter their name
+
     cout << "Enter your name: ";
     getline(cin, name);
 
-    // Create a directory for the name in the "dataset" folder
     string datasetPath = "dataset/" + name;
-    std::filesystem::create_directories(datasetPath); // Create directory if it doesn't exist
+    std::filesystem::create_directories(datasetPath);
 
-    cv::VideoCapture cam(0); // Open default camera
+    cv::VideoCapture cam(0);
 
     if (!cam.isOpened()) {
         cerr << "Error: Unable to open the camera" << endl;
@@ -29,7 +28,7 @@ int main() {
     int img_counter = 0;
     while (true) {
         cv::Mat frame;
-        cam >> frame; // Capture a frame
+        cam >> frame;
 
         if (frame.empty()) {
             cerr << "Error: Unable to grab frame" << endl;
@@ -39,10 +38,10 @@ int main() {
         cv::imshow("Press SPACE to take a photo", frame);
 
         int k = cv::waitKey(1);
-        if (k == 27) { // ESC key
+        if (k == 27) {
             cout << "Escape hit, closing..." << endl;
             break;
-        } else if (k == 32) { // SPACE key
+        } else if (k == 32) {
             string img_name = datasetPath + "/" + name + "_" + to_string(img_counter) + ".jpg";
             cv::imwrite(img_name, frame);
             cout << img_name << " written!" << endl;

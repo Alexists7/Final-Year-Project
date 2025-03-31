@@ -8,7 +8,6 @@
        <VerticalStackLayout Padding="30,0"
                             Spacing="25">
 
-              <!-- Welcome message -->
               <HorizontalStackLayout Spacing="10"
                                      HorizontalOptions="Center">
                      <Label
@@ -25,7 +24,6 @@
                             FontSize="24"/>
               </HorizontalStackLayout>
 
-              <!-- IP Address Entry -->
               <Entry Text="{Binding DeviceIpAddress}"
                      Placeholder="Enter device IP address"
                      WidthRequest="400"
@@ -34,14 +32,12 @@
                       Command="{Binding SaveIpCommand}"
                       IsVisible="{Binding IsIpEntryVisible}"/>
 
-              <!-- Video Selection UI - Visible when data is fetched -->
               <StackLayout IsVisible="{Binding IsDataFetched}"
                            Padding="100, 20"
                            Spacing="20">
                      <Label Text="Select a Video to Play:"
                             FontSize="20"/>
 
-                     <!-- List of videos -->
                      <ListView ItemsSource="{Binding VideoFiles}"
                                SelectedItem="{Binding SelectedVideo, Mode=TwoWay}"
                                SelectionMode="Single">
@@ -52,12 +48,10 @@
                             </ListView.ItemTemplate>
                      </ListView>
 
-                     <!-- Video Player -->
                      <toolkit:MediaElement Source="{Binding SelectedVideoPath}"
                                            HeightRequest="300"/>
               </StackLayout>
 
-              <!-- Log Out Button -->
               <Button
                      Margin="0, 10, 0, 0"
                      Text="Log Out"

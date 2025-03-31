@@ -33,10 +33,8 @@ namespace DesktopApp.Pages
                     return;
                 }
 
-                // Attempt to sign in with email and password
                 await _authClient.SignInWithEmailAndPasswordAsync(Email, Password);
 
-                // Navigate to the DisplayPage after successful login
                 await Shell.Current.GoToAsync("//DisplayPage");
             }
             catch (FirebaseAuthException ex)
@@ -45,7 +43,6 @@ namespace DesktopApp.Pages
             }
             catch (Exception ex)
             {
-                // Handle general errors
                 await Application.Current.MainPage.DisplayAlert("Error", $"An unexpected error occurred: {ex.Message}", "OK");
             }
             finally
