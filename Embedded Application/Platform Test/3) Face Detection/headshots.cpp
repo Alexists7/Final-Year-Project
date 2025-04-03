@@ -5,22 +5,21 @@
 
 using namespace std;
 
+// Function to open camera, and take photos of individuals, which will be used later for training. Only really works in a Linux environment.
+
 int main() {
     string name;
-    
-    // Prompt the user to enter their name
+
     cout << "Enter your name: ";
     getline(cin, name);
 
-    // Create a directory for the name in the "dataset" folder
     string datasetPath = "dataset/" + name;
-    std::filesystem::create_directories(datasetPath); // Create directory if it doesn't exist
+    std::filesystem::create_directories(datasetPath);
 
-    // GStreamer pipeline string with NV12 format
     string pipeline = "qtiqmmfsrc camera=0 ! video/x-raw,format=NV12,width=1280,height=720,framerate=30/1 ! "
                       "videoconvert ! video/x-raw,format=BGR ! appsink";
 
-    cv::VideoCapture cam(pipeline, cv::CAP_GSTREAMER); // Open GStreamer pipeline
+    cv::VideoCapture cam(pipeline, cv::CAP_GSTREAMER);
 
     if (!cam.isOpened()) {
         cerr << "Error: Unable to open the camera" << endl;
@@ -33,7 +32,7 @@ int main() {
     int img_counter = 0;
     while (true) {
         cv::Mat frame;
-        cam >> frame; // Capture a frame
+        cam >> frame;
 
         if (frame.empty()) {
             cerr << "Error: Unable to grab frame" << endl;
@@ -43,10 +42,10 @@ int main() {
         cv::imshow("Press SPACE to take a photo", frame);
 
         int k = cv::waitKey(1);
-        if (k == 27) { // ESC key
+        if (k == 27) {
             cout << "Escape hit, closing..." << endl;
             break;
-        } else if (k == 32) { // SPACE key
+        } else if (k == 32) {
             string img_name = datasetPath + "/" + name + "_" + to_string(img_counter) + ".jpg";
             cv::imwrite(img_name, frame);
             cout << img_name << " written!" << endl;

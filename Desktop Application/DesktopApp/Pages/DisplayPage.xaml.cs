@@ -13,7 +13,6 @@ public partial class DisplayPage : ContentPage
 	{
 		base.OnAppearing();
 
-		// Call the OnAppearing method of the ViewModel
 		var viewModel = BindingContext as DisplayPageViewModel;
 		viewModel?.OnAppearing();
 	}
