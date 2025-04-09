@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mtyJB/SZFYc=",
+  "dgSpecHash": "Ke0Vtc/TjkY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\alexi\\Desktop\\Assignments\\Year 4\\Final Year Project\\Code\\Final-Year-Project\\Desktop Application\\DesktopApp\\DesktopApp.csproj",
+  "projectFilePath": "c:\\Users\\alexi\\Desktop\\Assignments\\Year 4\\Final Year Project\\Code\\Final-Year-Project\\Desktop Application\\DesktopApp\\DesktopApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alexi\\.nuget\\packages\\communitytoolkit.maui\\8.0.0\\communitytoolkit.maui.8.0.0.nupkg.sha512",
     "C:\\Users\\alexi\\.nuget\\packages\\communitytoolkit.maui.core\\8.0.0\\communitytoolkit.maui.core.8.0.0.nupkg.sha512",
@@ -139,6 +139,19 @@
     "C:\\Users\\alexi\\.nuget\\packages\\xamarin.kotlin.stdlib.jdk8\\1.9.0.1\\xamarin.kotlin.stdlib.jdk8.1.9.0.1.nupkg.sha512",
     "C:\\Users\\alexi\\.nuget\\packages\\xamarin.kotlinx.coroutines.android\\1.7.2.1\\xamarin.kotlinx.coroutines.android.1.7.2.1.nupkg.sha512",
     "C:\\Users\\alexi\\.nuget\\packages\\xamarin.kotlinx.coroutines.core.jvm\\1.7.2.1\\xamarin.kotlinx.coroutines.core.jvm.1.7.2.1.nupkg.sha512",
+    "C:\\Users\\alexi\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.win-x64\\8.0.14\\microsoft.netcore.app.runtime.mono.win-x64.8.0.14.nupkg.sha512",
+    "C:\\Users\\alexi\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.14\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.14.nupkg.sha512",
+    "C:\\Users\\alexi\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.14\\microsoft.aspnetcore.app.runtime.win-x64.8.0.14.nupkg.sha512",
+    "C:\\Users\\alexi\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.win-x64\\8.0.14\\microsoft.netcore.app.runtime.mono.win-x64.8.0.14.nupkg.sha512",
+    "C:\\Users\\alexi\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.14\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.14.nupkg.sha512",
+    "C:\\Users\\alexi\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.14\\microsoft.aspnetcore.app.runtime.win-x64.8.0.14.nupkg.sha512",
+    "C:\\Users\\alexi\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.win-x64\\8.0.14\\microsoft.netcore.app.runtime.mono.win-x64.8.0.14.nupkg.sha512",
+    "C:\\Users\\alexi\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.14\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.14.nupkg.sha512",
+    "C:\\Users\\alexi\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.14\\microsoft.aspnetcore.app.runtime.win-x64.8.0.14.nupkg.sha512",
+    "C:\\Users\\alexi\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.14\\microsoft.netcore.app.runtime.win-x64.8.0.14.nupkg.sha512",
+    "C:\\Users\\alexi\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.14\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.14.nupkg.sha512",
+    "C:\\Users\\alexi\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.14\\microsoft.aspnetcore.app.runtime.win-x64.8.0.14.nupkg.sha512",
+    "C:\\Users\\alexi\\.nuget\\packages\\microsoft.netcore.app.crossgen2.win-x64\\8.0.14\\microsoft.netcore.app.crossgen2.win-x64.8.0.14.nupkg.sha512",
     "C:\\Users\\alexi\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.56\\microsoft.windows.sdk.net.ref.10.0.19041.56.nupkg.sha512"
   ],
   "logs": []
